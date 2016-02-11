@@ -83,8 +83,12 @@ object SbtSystemJS extends AutoPlugin {
       streams.value.log.info("Building JavaScript with SystemJS")
 
       val url = SbtSystemJS.getClass.getClassLoader.getResource("systemjs-builder-shell.js")
-      streams.value.log.info(s"SystemJs Builder Shell Path: $url")
-      val file = IO.toFile(url)
+
+      val file = SbtWeb.copyResourceTo(
+        (target in Plugin).value / "systemjs-builder-shell.js",
+        url,
+        streams.value.cacheDirectory / "copy-resource"
+      )
 
       SbtJsTask.executeJs(
         state.value,

@@ -4,7 +4,7 @@ organization := "de.envisia.sbt"
 
 name := "sbt-systemjs"
 
-version := "0.0.1-M3"
+version := "0.0.1-M4"
 
 scalaVersion := "2.10.6"
 
