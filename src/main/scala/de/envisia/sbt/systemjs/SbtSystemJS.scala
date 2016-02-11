@@ -82,7 +82,9 @@ object SbtSystemJS extends AutoPlugin {
     val runUpdate = FileFunction.cached(cacheDirectory, FilesInfo.hash) { _ =>
       streams.value.log.info("Building JavaScript with SystemJS")
 
-
+      val url = SbtSystemJS.getClass.getClassLoader.getResource("systemjs-builder-shell.js")
+      streams.value.log.info(s"SystemJs Builder Shell Path: $url")
+      val file = IO.toFile(url)
 
       SbtJsTask.executeJs(
         state.value,
@@ -90,7 +92,7 @@ object SbtSystemJS extends AutoPlugin {
         (engineType in systemjs).value,
         (command in systemjs).value,
         modules,
-        new File(getClass.getClassLoader.getResource("systemjs-builder-shell.js").toURI),
+        file,
         Seq(appDir.value.toString, mainConfigFile.value.toString, mainFile.value.toString, outputFile.value.toString),
         (timeoutPerSource in systemjs).value * builderMappings.size
       )
