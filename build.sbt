@@ -6,7 +6,10 @@ name := "sbt-systemjs"
 
 version := "0.0.1-M1"
 
-scalaVersion := "2.10.5"
+scalaVersion := "2.10.6"
+
+
+lazy val root = (project in file(".")).settings()
 
 libraryDependencies ++= Seq(
   "org.webjars.npm" % "typescript" % "1.8.0",
@@ -31,6 +34,31 @@ addSbtPlugin("com.typesafe.sbt" %% "sbt-web" % "1.1.1")
 
 addSbtPlugin("com.typesafe.sbt" %% "sbt-js-engine" % "1.1.1")
 
+publishMavenStyle := false
+
 scriptedSettings
 
 scriptedLaunchOpts <+= version apply { v => s"-Dproject.version=$v" }
+
+bintrayOrganization := Some("envisia")
+
+pomExtra := (
+  <url>https://github.com/envisia/sbt-systemjs</url>
+    <licenses>
+      <license>
+        <name>Apache-2.0</name>
+        <url>https://opensource.org/licenses/Apache-2.0</url>
+        <distribution>repo</distribution>
+      </license>
+    </licenses>
+    <scm>
+      <url>git@github.com:envisia/sbt-systemjs.git</url>
+      <connection>scm:git:git@github.com:envisia/sbt-systemjs.git</connection>
+    </scm>
+    <developers>
+      <developer>
+        <id>envisia</id>
+        <name>Christian Schmitt</name>
+        <url>https://www.envisia.de</url>
+      </developer>
+    </developers>)

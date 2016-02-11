@@ -44,7 +44,7 @@ object SbtSystemJS extends AutoPlugin {
   override def projectSettings = Seq(
     appDir := (webTarget in systemjs).value / "public" / "main" / "app",
 
-    dir := (webTarget in systemjs).value / "public" / "systemjs",
+    dir := (webTarget in systemjs).value / "public" / "main",
 
     includeFilter in systemjs := GlobFilter("*.js"),
     excludeFilter in systemjs := HiddenFileFilter,
@@ -86,8 +86,8 @@ object SbtSystemJS extends AutoPlugin {
 
       SbtJsTask.executeJs(
         state.value,
-        EngineType.Node,
-        // (engineType in systemjs).value,
+        // EngineType.Node,
+        (engineType in systemjs).value,
         (command in systemjs).value,
         modules,
         new File(getClass.getClassLoader.getResource("systemjs-builder-shell.js").toURI),
